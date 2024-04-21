@@ -8,59 +8,59 @@
 #define DEFAULT_PWM_MAX 100
 
 /* PID Mode */
-typedef enum{
-	_PID_MODE_MANUAL    = 0,
-	_PID_MODE_AUTOMATIC = 1
-}PIDMode_TypeDef;
+typedef enum {
+    _PID_MODE_MANUAL    = 0,
+    _PID_MODE_AUTOMATIC = 1
+} PIDMode_TypeDef;
 
 /* PID Control direction */
-typedef enum{
-	_PID_CD_DIRECT  = 0,
-	_PID_CD_REVERSE = 1
-}PIDCD_TypeDef;
+typedef enum {
+    _PID_CD_DIRECT  = 0,
+    _PID_CD_REVERSE = 1
+} PIDCD_TypeDef;
 
 /* PID Structure */
-typedef struct{
+typedef struct {
 
-	PIDMode_TypeDef InAuto;
-	PIDCD_TypeDef   ControllerDirection;
+    PIDMode_TypeDef InAuto;
+    PIDCD_TypeDef ControllerDirection;
 
-	uint32_t        LastTime;
-	uint32_t        SampleTime;
+    uint32_t LastTime;
+    uint32_t SampleTime;
 
-	uint32_t        updateOnEveryCall;
+    uint32_t updateOnEveryCall;
 
-	double          DispKp;
-	double          DispKi;
-	double          DispKd;
+    double DispKp;
+    double DispKi;
+    double DispKd;
 
-	double          Kp;
-	double          Ki;
-	double          Kd;
+    double Kp;
+    double Ki;
+    double Kd;
 
-	double          DispKp_part;
-	double          DispKi_part;
-	double          DispKd_part;
+    double DispKp_part;
+    double DispKi_part;
+    double DispKd_part;
 
-	double          *MyInput;
-	double          *MyOutput;
-	double          *MySetpoint;
+    double* MyInput;
+    double* MyOutput;
+    double* MySetpoint;
 
-	double          OutputSum;
-	double          LastInput;
+    double OutputSum;
+    double LastInput;
 
-	double          OutMin;
-	double          OutMax;
+    double OutMin;
+    double OutMax;
 
-	double          IMin;
-	double          IMax;
+    double IMin;
+    double IMax;
 
-}PID_TypeDef;
+} PID_TypeDef;
 
 /* Init */
-void PID_Init(PID_TypeDef *uPID);
+void PID_Init(PID_TypeDef* uPID);
 
-void PID(PID_TypeDef *uPID, double *Input, double *Output, double *Setpoint, double Kp, double Ki, double Kd, PIDCD_TypeDef ControllerDirection);
+void PID(PID_TypeDef* uPID, double* Input, double* Output, double* Setpoint, double Kp, double Ki, double Kd, PIDCD_TypeDef ControllerDirection);
 
 /* Function to clamp d between the limits min and max */
 double double_clamp(double d, double min, double max);
@@ -69,32 +69,32 @@ double double_clamp(double d, double min, double max);
 uint8_t check_clamping(double d, double min, double max);
 
 /* Computing */
-uint8_t PID_Compute(PID_TypeDef *uPID);
+uint8_t PID_Compute(PID_TypeDef* uPID);
 
 /* PID Limits */
-void PID_SetOutputLimits(PID_TypeDef *uPID, double Min, double Max);
+void PID_SetOutputLimits(PID_TypeDef* uPID, double Min, double Max);
 
 /* PID I-windup Limits */
-void PID_SetILimits(PID_TypeDef *uPID, double Min, double Max);
+void PID_SetILimits(PID_TypeDef* uPID, double Min, double Max);
 
 /* PID Tunings */
-void PID_SetTunings(PID_TypeDef *uPID, double Kp, double Ki, double Kd);
+void PID_SetTunings(PID_TypeDef* uPID, double Kp, double Ki, double Kd);
 
 /* PID Direction */
-void          PID_SetControllerDirection(PID_TypeDef *uPID, PIDCD_TypeDef Direction);
-PIDCD_TypeDef PID_GetDirection(PID_TypeDef *uPID);
+void PID_SetControllerDirection(PID_TypeDef* uPID, PIDCD_TypeDef Direction);
+PIDCD_TypeDef PID_GetDirection(PID_TypeDef* uPID);
 
 /* PID Sampling */
-void PID_SetSampleTime(PID_TypeDef *uPID, int32_t NewSampleTime, int32_t updateOnCall);
+void PID_SetSampleTime(PID_TypeDef* uPID, int32_t NewSampleTime, int32_t updateOnCall);
 
-void PID_SetMode(PID_TypeDef *uPID, PIDMode_TypeDef Mode);
+void PID_SetMode(PID_TypeDef* uPID, PIDMode_TypeDef Mode);
 
 /* Get Tunings Param */
-double PID_GetKp(PID_TypeDef *uPID);
-double PID_GetKi(PID_TypeDef *uPID);
-double PID_GetKd(PID_TypeDef *uPID);
+double PID_GetKp(PID_TypeDef* uPID);
+double PID_GetKi(PID_TypeDef* uPID);
+double PID_GetKd(PID_TypeDef* uPID);
 
 /* Get current contributions */
-double PID_GetPpart(PID_TypeDef *uPID);
-double PID_GetIpart(PID_TypeDef *uPID);
-double PID_GetDpart(PID_TypeDef *uPID);
+double PID_GetPpart(PID_TypeDef* uPID);
+double PID_GetIpart(PID_TypeDef* uPID);
+double PID_GetDpart(PID_TypeDef* uPID);
